@@ -3,9 +3,9 @@ import pygame
 
 class Tank:
 
-    def __init__(self, screen: object, lives: object, ammo_tank: object) -> object:
+    def __init__(self, screen: object, lives: object, ammo: object) -> object:
         """инициализация танка"""
-        self.ammo_tank = ammo_tank
+        self.ammo = ammo
         self.lives = lives
         self.screen = screen
         self.image = pygame.image.load("Pics/tank.png")
@@ -38,7 +38,33 @@ class Tank:
         self.rect.centery = self.y
 
     def ammo_restore(self, qty):
-        self.ammo_tank += qty
+        """восстановление боезопаса"""
+        self.ammo += qty
 
-    def tank_kill(self):
+    def kill(self):
+        """смерть, респавн"""
         self.x = 100
+
+
+class Enemy(Tank): # Наследуется всё кроме спавна и смерти
+    def __init__(self, screen, lives, ammo):
+        """инициализация противника и начальной позиции"""
+        self.lives = lives
+        self.ammo = ammo
+        self.screen = screen
+        self.image = pygame.image.load("Pics/tank2.png")
+        self.rect = self.image.get_rect()
+        self.screen_rect = screen.get_rect()
+        self.rect.midright = self.screen_rect.midright
+        self.speed = 0.2
+        self.x = self.rect.centerx
+        self.y = self.rect.centery
+        self.mright = False
+        self.mleft = False
+        self.mup = False
+        self.mdown = False
+
+
+    def enemy_kill(self):
+        """смерть, респавн"""
+        self.x = 1700

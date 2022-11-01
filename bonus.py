@@ -5,17 +5,15 @@ class Bonus:
 
     def __init__(self, screen):
         """инициализация танка"""
-        self.ammo = ammo
-        self.lives = lives
         self.screen = screen
-        self.image = pygame.image.load("Pics/tank.png")
+        self.image = pygame.image.load("")
         self.rect = self.image.get_rect()
         self.screen_rect = screen.get_rect()
         self.center = float(self.rect.centerx)
-        self.rect.left = self.screen_rect.left
-        self.rect.bottom = self.screen_rect.bottom
-        self.mright = False
-        self.mleft = False
+        self.x = self.rect.centerx
+        self.y = self.rect.centery
+        self.mup = False
+        self.mdown = False
 
     def output(self):
         """прорисовка танка"""

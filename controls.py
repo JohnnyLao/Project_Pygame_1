@@ -1,64 +1,63 @@
 import pygame, sys
 from bullets import Bullet, Bullet_enemy
 from text import Text
-
+from main import run
 
 def events(screen, tank, bullets, enemy, enemy_bullets, text):
-    """управление игрока"""
+    """управление игроков"""
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_d:
-                tank.mright = True      #RIGHT
+                tank.mright = True
             elif event.key == pygame.K_a:
-                tank.mleft = True       #LEFT
+                tank.mleft = True
             elif event.key == pygame.K_w:
-                tank.mup = True      #RIGHT
+                tank.mup = True
             elif event.key == pygame.K_s:
-                tank.mdown = True       #LEFT
+                tank.mdown = True
             if event.key == pygame.K_RIGHT:
-                enemy.mright = True  # RIGHT
+                enemy.mright = True
             elif event.key == pygame.K_LEFT:
-                enemy.mleft = True  # LEFT
+                enemy.mleft = True
             elif event.key == pygame.K_UP:
-                enemy.mup = True      #RIGHT
+                enemy.mup = True
             elif event.key == pygame.K_DOWN:
-                enemy.mdown = True       #LEFT
+                enemy.mdown = True
             elif event.key == pygame.K_SPACE:
-                if tank.ammo_tank > 0:
-                    print(f'AMMO = {tank.ammo_tank - 1}')
+                if tank.ammo > 0:
+                    print(f'AMMO = {tank.ammo - 1}')
                     new_bullet = Bullet(screen, tank)
                     bullets.add(new_bullet)
-                    tank.ammo_tank -= 1
-                    text.image_score()
+                    tank.ammo -= 1
                 else:
                     print(f'TANK NO AMMO!!!')
             elif event.key == pygame.K_BACKSPACE:
-                if enemy.ammo_enemy > 0:
-                    print(f'AMMO = {enemy.ammo_enemy - 1}')
+                if enemy.ammo > 0:
+                    print(f'AMMO = {enemy.ammo - 1}')
                     new_bullet = Bullet_enemy(screen, enemy)
                     enemy_bullets.add(new_bullet)
-                    enemy.ammo_enemy -= 1
+                    enemy.ammo -= 1
                 else:
                     print(f'ENEMY NO AMMO!!!')
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_d:
-                tank.mright = False     #RIGHT
+                tank.mright = False
             elif event.key == pygame.K_a:
-                tank.mleft = False      #LEFT\
+                tank.mleft = False
             elif event.key == pygame.K_w:
-                tank.mup = False  # RIGHT
+                tank.mup = False
             elif event.key == pygame.K_s:
-                tank.mdown = False  # LEFT\
+                tank.mdown = False
             elif event.key == pygame.K_RIGHT:
-                enemy.mright = False  # RIGHT
+                enemy.mright = False
             elif event.key == pygame.K_LEFT:
-                enemy.mleft = False  # LEFT\
+                enemy.mleft = False
             elif event.key == pygame.K_UP:
-                enemy.mup = False      #RIGHT
+                enemy.mup = False
             elif event.key == pygame.K_DOWN:
-                enemy.mdown = False       #LEFT
+                enemy.mdown = False
 
 
 def update(bg_color, screen, tank, bullets, enemy, enemy_bullets, text):
@@ -72,7 +71,7 @@ def update(bg_color, screen, tank, bullets, enemy, enemy_bullets, text):
     tank.output()
     enemy.output()
     tank.update_tank()
-    enemy.update_tank_enemy()
+    enemy.update_tank()
     pygame.display.flip()
     if pygame.sprite.spritecollide(enemy, bullets, True): #
         """Попадание по Врагу, сброс спавна, + 5 патронов"""
@@ -81,17 +80,17 @@ def update(bg_color, screen, tank, bullets, enemy, enemy_bullets, text):
         tank.ammo_restore(5)
         bullets.empty()
         enemy_bullets.empty()
-        print(f'TANK AMMO = {tank.ammo_tank} --> +5 ammo restored')
+        print(f'TANK AMMO = {tank.ammo} --> +5 ammo restored')
         pygame.time.delay(1000)
 
     if pygame.sprite.spritecollide(tank, enemy_bullets, True):
         """Попадание по Игроку, сброс спавна, + 5 патронов"""
         print("TANK HIT!")
-        tank.tank_kill()
+        tank.kill()
         enemy.ammo_restore(5)
         bullets.empty()
         enemy_bullets.empty()
-        print(f'ENEMY AMMO = {enemy.ammo_enemy} --> +5 ammo restored')
+        print(f'ENEMY AMMO = {enemy.ammo} --> +5 ammo restored')
         pygame.time.delay(1000)
 
     if pygame.sprite.groupcollide(bullets, enemy_bullets, True, True):

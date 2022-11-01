@@ -8,7 +8,7 @@ class Bullet(pygame.sprite.Sprite):
         """создание снаряда в танке"""
         super(Bullet, self).__init__()
         self.screen = screen
-        self.rect = pygame.Rect(0, 0, 12, 2)
+        self.rect = pygame.Rect(0, 0, 10, 4)
         self.color = (133, 195, 74)
         self.speed = 0.5
         self.rect.centery = tank.rect.centery - 4
@@ -34,7 +34,7 @@ class Bullet_enemy(pygame.sprite.Sprite):
         """создание снаряда у врага"""
         super(Bullet_enemy, self).__init__()
         self.screen = screen
-        self.rect = pygame.Rect(0, 0, 12, 2)
+        self.rect = pygame.Rect(0, 0, 10, 4)
         self.color = (136, 8, 8)
         self.speed = 0.5
         self.rect.centery = enemy.rect.centery - 4

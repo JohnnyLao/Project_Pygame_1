@@ -1,6 +1,5 @@
 import pygame, controls
-from tank import Tank
-from enemy import Enemy
+from units import Tank, Enemy
 from pygame.sprite import Group
 from text import Text
 
@@ -13,7 +12,7 @@ def run():
     tank = Tank(screen, 3, 999)
     bullets, enemy_bullets = Group(), Group()
     enemy = Enemy(screen, 3, 999)
-    text = Text(screen, "ОЛЕГ VS ЕГОРКА")
+    text = Text(screen, tank.ammo)
     while True:
         controls.events(screen, tank, bullets, enemy, enemy_bullets, text)
         controls.update(bg_color, screen, tank, bullets, enemy, enemy_bullets, text)
